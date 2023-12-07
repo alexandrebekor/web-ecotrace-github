@@ -1,11 +1,6 @@
+import { users } from "./http/routes/users.route";
 import { env } from "./lib/env";
 import { app } from "./server";
-
-app.get('/', (request, response) => {
-  return response.status(200).send({
-    message: 'hello'
-  })
-})
 
 app.listen({
   host: env.HOST,
