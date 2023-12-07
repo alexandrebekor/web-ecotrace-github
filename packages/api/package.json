@@ -1,21 +1,23 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "description": "",
+  "description": "REST API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "tsx src/app.ts",
+    "build": "tsup src --out-dir build",
+    "start": "node build/app.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Alexandre Bekor",
   "license": "ISC",
+  "dependencies": {
+    "fastify": "4.24.3"
+  },
   "devDependencies": {
     "@types/node": "20.10.4",
     "tsup": "8.0.1",
     "tsx": "4.6.2",
     "typescript": "5.3.3"
-  },
-  "dependencies": {
-    "fastify": "4.24.3"
   }
 }
