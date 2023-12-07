@@ -1,3 +1,4 @@
+import { env } from "./lib/env";
 import { app } from "./server";
 
 app.get('/', (request, response) => {
@@ -7,6 +8,8 @@ app.get('/', (request, response) => {
 })
 
 app.listen({
-  host: "0.0.0.0",
-  port: 3333
-}).then(() => console.log(`Started in PORT: ${3333}`))
+  host: env.HOST,
+  port: env.PORT
+}).then(() => {
+  console.log(`Started in PORT: ${env.PORT}`)
+})
