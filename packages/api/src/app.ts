@@ -1,9 +1,8 @@
-import { env } from './lib/env'
-import { app } from './server'
+import server from 'fastify'
+import { users } from './http/routes/users.route'
 
-app.listen({
-	host: env.HOST,
-	port: env.PORT
-}).then(() => {
-	console.log(`Started in PORT: ${env.PORT}`)
+export const app = server()
+
+app.register(users, {
+	prefix: '/users'
 })

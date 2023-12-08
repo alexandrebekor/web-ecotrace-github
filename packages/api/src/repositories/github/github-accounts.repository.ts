@@ -1,6 +1,6 @@
 import { AccountsRepository } from '../accounts.repository'
 
-export class GithubRepository implements AccountsRepository {
+export class GithubAccountsRepository implements AccountsRepository {
 	private base_url = 'https://api.github.com'
 
 	async findByUsername(username: string) {

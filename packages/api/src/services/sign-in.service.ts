@@ -13,7 +13,7 @@ type SignInServiceRequest = {
 }
 
 type SignInServiceResponse = {
-  user: User | null
+  user: User
 }
 
 export class SignInService {

@@ -4,9 +4,9 @@
   "description": "REST API",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch src/app.ts",
+    "dev": "tsx watch src/server.ts",
     "build": "tsup src --out-dir build",
-    "start": "node build/app.js",
+    "start": "node build/server.js",
     "lint": "eslint",
     "test": "vitest run",
     "test:watch": "vitest"
