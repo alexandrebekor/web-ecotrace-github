@@ -9,7 +9,7 @@ import { SignInService } from '@/services/sign-in.service'
 
 export const signUp = async (request: FastifyRequest, response: FastifyReply) => {
 	const schema = z.object({
-		username: z.string(),
+		username: z.string().min(1),
 		email: z.string().email(),
 		password: z.string().min(6)
 	})
@@ -31,13 +31,19 @@ export const signUp = async (request: FastifyRequest, response: FastifyReply) =>
 	} catch (error) {
 		if(error instanceof UserAlreadyExists) {
 			return response.status(409).send({
-				message: error.message
+				data: null,
+				error: {
+					message: error.message
+				}
 			})
 		}
 
 		if(error instanceof InvalidUsername) {
 			return response.status(404).send({
-				message: error.message
+				data: null,
+				error: {
+					message: error.message
+				}
 			})
 		}
 

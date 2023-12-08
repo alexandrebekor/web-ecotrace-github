@@ -5,6 +5,7 @@ import { hash } from 'bcryptjs'
 import { UserAlreadyExists } from './errors/user-already-exists.error'
 import { AccountsRepository } from '@/repositories/accounts.repository'
 import { InvalidUsername } from './errors/invalid-username.error'
+import { sanitizeText } from '@/utils/format-text'
 
 type SignInServiceRequest = {
   username: string
@@ -27,7 +28,8 @@ export class SignInService {
 			throw new UserAlreadyExists()
 		}
 
-		const userAccount = await this.accountsRepository.findByUsername(username)
+		const usernameFormated = sanitizeText(username)
+		const userAccount = await this.accountsRepository.findByUsername(usernameFormated)
 
 		if(!userAccount) {
 			throw new InvalidUsername()
@@ -36,7 +38,7 @@ export class SignInService {
 		const password_hash = await hash(password, 6)
 
 		const user = await this.usersRepository.create({
-			username,
+			username: usernameFormated,
 			email,
 			password: password_hash,
 			name: userAccount.name ?? null,

@@ -36,7 +36,7 @@ describe('Sign Up user', () => {
 		expect(isHashPassword).toBe(true)
 	})
 
-	it('should not be able to create a new user with email in use', async () => {
+	it('should not be able to create a new user if email already exists', async () => {
 		const usersRepository = new InMemoryUsersRepository()
 		const accountsRepository = new GithubAccountsRepository()
 		const signUpService = new SignInService(usersRepository, accountsRepository)
@@ -62,7 +62,7 @@ describe('Sign Up user', () => {
 		const signUpService = new SignInService(usersRepository, accountsRepository)
 
 		expect(() => signUpService.execute({
-			username: 'alexandrebekor123456',
+			username: 'username que não existe',
 			email: 'alexandre@bekor.com',
 			password: '123456'
 		})).rejects.toBeInstanceOf(InvalidUsername)
