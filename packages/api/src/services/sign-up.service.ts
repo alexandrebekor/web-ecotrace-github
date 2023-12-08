@@ -17,7 +17,7 @@ type SignInServiceResponse = {
   user: User
 }
 
-export class SignInService {
+export class SignUpService {
 	constructor(readonly usersRepository: UsersRepository, readonly accountsRepository: AccountsRepository) {}
 
 	async execute ({ username, email, password }: SignInServiceRequest): Promise<SignInServiceResponse> {

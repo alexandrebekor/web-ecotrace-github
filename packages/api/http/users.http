@@ -1,8 +1,0 @@
-POST {{$dotenv HOST_URL}}/users
-Content-Type: application/json
-
-{
-  "email": "staff@alexandrebekor1.com",
-  "username": "alexandre123122",
-  "password": "16"
-}

@@ -3,6 +3,7 @@ version: '3.8'
 networks:
   net-ecotrace:
     driver: bridge
+    
 services:
   postgresql:
     image: bitnami/postgresql:latest

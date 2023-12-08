@@ -5,7 +5,7 @@ import { GithubAccountsRepository } from '@/repositories/github/github-accounts.
 import { PrismaUsersRepository } from '@/repositories/prisma/prisma-users.repository'
 import { InvalidUsername } from '@/services/errors/invalid-username.error'
 import { UserAlreadyExists } from '@/services/errors/user-already-exists.error'
-import { SignInService } from '@/services/sign-in.service'
+import { SignUpService } from '@/services/sign-up.service'
 
 export const signUp = async (request: FastifyRequest, response: FastifyReply) => {
 	const schema = z.object({
@@ -20,7 +20,7 @@ export const signUp = async (request: FastifyRequest, response: FastifyReply) =>
 		const usersRepository = new PrismaUsersRepository()
 		const accountsRepository = new GithubAccountsRepository()
 		
-		const signUpService = new SignInService(usersRepository, accountsRepository)
+		const signUpService = new SignUpService(usersRepository, accountsRepository)
 
 		await signUpService.execute({
 			username,
@@ -31,19 +31,13 @@ export const signUp = async (request: FastifyRequest, response: FastifyReply) =>
 	} catch (error) {
 		if(error instanceof UserAlreadyExists) {
 			return response.status(409).send({
-				data: null,
-				error: {
-					message: error.message
-				}
+				message: error.message
 			})
 		}
 
 		if(error instanceof InvalidUsername) {
 			return response.status(404).send({
-				data: null,
-				error: {
-					message: error.message
-				}
+				message: error.message
 			})
 		}
 
