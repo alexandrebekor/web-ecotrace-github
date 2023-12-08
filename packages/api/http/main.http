@@ -1,1 +1,0 @@
-GET {{$dotenv HOST_URL}}/
