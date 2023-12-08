@@ -1,1 +1,8 @@
-GET {{$dotenv HOST_URL}}/users
+POST {{$dotenv HOST_URL}}/users
+Content-Type: application/json
+
+{
+  "email": "staff@alexandrebekor.com",
+  "username": "alexandrebekor",
+  "password": "123456"
+}

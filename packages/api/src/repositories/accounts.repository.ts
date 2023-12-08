@@ -1,6 +1,6 @@
-import { RepositoriesGithub, UserGithub } from '@/types/Github'
+import { Account, Repositories } from '@/types/accounts'
 
 export type AccountsRepository = {
-	findByUsername(username: string): Promise<UserGithub>
-	getRepositories(username: string): Promise<RepositoriesGithub>
+	findByUsername(username: string): Promise<Account | null>
+	getRepositories(username: string): Promise<Repositories | null>
 }

@@ -1,10 +1,9 @@
-import { UserGithub } from '@/types/Github'
 import { AccountsRepository } from '../accounts.repository'
 
 export class GithubRepository implements AccountsRepository {
 	private base_url = 'https://api.github.com'
 
-	async findByUsername(username: string): Promise<UserGithub> {
+	async findByUsername(username: string) {
 		try {
 			const response = await fetch(`${this.base_url}/users/${username}`, {
 				method: 'GET',
@@ -14,13 +13,12 @@ export class GithubRepository implements AccountsRepository {
 			})
 
 			if(!response.ok) {
-				throw new Error('Error API')
+				return null
 			}
 
 			const user = await response.json()
 			return user
 		} catch (error) {
-			console.log(error)
 			throw new Error('Internal Error')
 		}
 	}
@@ -35,7 +33,7 @@ export class GithubRepository implements AccountsRepository {
 			})
 
 			if(!response.ok) {
-				throw new Error('Error API')
+				return null
 			}
 
 			const repositories = await response.json()

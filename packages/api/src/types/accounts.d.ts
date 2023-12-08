@@ -1,4 +1,4 @@
-export type UserGithub = {
+export type Account = {
   'login': string
   'id': number
   'node_id': string
@@ -33,7 +33,7 @@ export type UserGithub = {
   'updated_at': string
 }
 
-export type RepositoryGithub = {
+export type Repository = {
   'id': number
   'node_id': string
   'name': string
@@ -134,4 +134,4 @@ export type RepositoryGithub = {
   'default_branch': string
 }
 
-export type RepositoriesGithub = RepositoriesGithub[]
+export type Repositories = Repository[]
