@@ -13,7 +13,8 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "test": "turbo run test",
-    "test:ui": "turbo run test:ui"
+    "test:ui": "turbo run test:ui",
+    "test:coverage": "turbo run test:coverage"
   },
   "devDependencies": {
     "turbo": "1.11.1"

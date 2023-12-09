@@ -1,15 +1,15 @@
-import { GithubAccountsRepository } from '@/repositories/github/github-accounts.repository'
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users.repository'
 import { it, expect, describe } from 'vitest'
 import { SignUpService } from './sign-up.service'
 import { compare } from 'bcryptjs'
 import { UserAlreadyExists } from './errors/user-already-exists.error'
 import { InvalidUsername } from './errors/invalid-username.error'
+import { InMemoryAccountsRepository } from '@/repositories/in-memory/in-memory-accounts.repository'
 
 describe('Sign Up user', () => {
 	it('should be able to sign up', async () => {
 		const usersRepository = new InMemoryUsersRepository()
-		const accountsRepository = new GithubAccountsRepository()
+		const accountsRepository = new InMemoryAccountsRepository()
 		const signUpService = new SignUpService(usersRepository, accountsRepository)
     
 		const { user } = await signUpService.execute({
@@ -23,7 +23,7 @@ describe('Sign Up user', () => {
   
 	it('should hash the password', async () => {
 		const usersRepository = new InMemoryUsersRepository()
-		const accountsRepository = new GithubAccountsRepository()
+		const accountsRepository = new InMemoryAccountsRepository()
 		const signUpService = new SignUpService(usersRepository, accountsRepository)
 
 		const { user } = await signUpService.execute({
@@ -38,7 +38,7 @@ describe('Sign Up user', () => {
 
 	it('should not be able to create a new user if email already exists', async () => {
 		const usersRepository = new InMemoryUsersRepository()
-		const accountsRepository = new GithubAccountsRepository()
+		const accountsRepository = new InMemoryAccountsRepository()
 		const signUpService = new SignUpService(usersRepository, accountsRepository)
 
 		const email = 'alexandre@bekor.com'
@@ -58,11 +58,11 @@ describe('Sign Up user', () => {
 
 	it('should not be able to create a new user with a username without account in github', async () => {
 		const usersRepository = new InMemoryUsersRepository()
-		const accountsRepository = new GithubAccountsRepository()
+		const accountsRepository = new InMemoryAccountsRepository()
 		const signUpService = new SignUpService(usersRepository, accountsRepository)
 
 		await expect(() => signUpService.execute({
-			username: 'username que não existe',
+			username: 'username wrong',
 			email: 'alexandre@bekor.com',
 			password: '123456'
 		})).rejects.toBeInstanceOf(InvalidUsername)
