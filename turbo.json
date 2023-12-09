@@ -8,7 +8,7 @@
       "dotEnv": [".env"]
     },
     "test": {
-      "outputs": []
+      "dependsOn": ["^build"]
     },
     "test:ui": {
       "cache": false

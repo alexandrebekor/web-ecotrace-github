@@ -12,7 +12,7 @@ export class GithubAccountsRepository implements AccountsRepository {
 				}
 			})
 
-			if(!response.ok) {
+			if(!response.ok) {				
 				return null
 			}
 

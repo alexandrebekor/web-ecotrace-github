@@ -4,6 +4,7 @@ import { ZodError } from 'zod'
 import { env } from './lib/env'
 import { PrismaClientInitializationError } from '@prisma/client/runtime/library'
 import { auth } from './http/routes/auth.route'
+import { NotAuthorized } from './services/errors/not-authorized.error'
 
 export const app = server()
 
@@ -29,9 +30,17 @@ app.setErrorHandler((error: FastifyError, _request: FastifyRequest, response: Fa
 		})
 	}
 
+	if(error instanceof NotAuthorized) {
+		return response.status(403).send({
+			message: error.message
+		})
+	}
+
 	if(env.NODE_ENV !== 'production') {
 		console.error(error)
 	}
+
+	console.log(error)
 
 	return response.status(500).send({
 		message: 'Internal server error.'
