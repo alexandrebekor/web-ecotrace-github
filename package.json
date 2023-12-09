@@ -1,0 +1,16 @@
+{
+  "name": "web-ecotrace-github",
+  "version": "1.0.0",
+  "description": "Listagem de repositórios do Github, com suporte a cadastro/edição do usuário de acesso, visualização de repositórios de terceiros com persistencia de histórico de consulta.",
+  "main": "index.js",
+  "workspaces": ["apps/*"],
+  "keywords": [],
+  "author": "Alexandre Bekor",
+  "license": "ISC",
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "test": "turbo run test",
+    "test:ui": "turbo run test:ui"
+  }
+}

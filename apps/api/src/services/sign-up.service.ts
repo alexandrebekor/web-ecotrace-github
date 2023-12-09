@@ -1,7 +1,7 @@
 import { UsersRepository } from '@/repositories/users.repository'
 import { User } from '@prisma/client'
 
-import { hash } from 'bcryptjs'
+import bcryptjs from 'bcryptjs'
 import { UserAlreadyExists } from './errors/user-already-exists.error'
 import { AccountsRepository } from '@/repositories/accounts.repository'
 import { InvalidUsername } from './errors/invalid-username.error'
@@ -35,7 +35,7 @@ export class SignUpService {
 			throw new InvalidUsername()
 		}
 
-		const password_hash = await hash(password, 6)
+		const password_hash = await bcryptjs.hash(password, 6)
 
 		const user = await this.usersRepository.create({
 			username: usernameFormated,
