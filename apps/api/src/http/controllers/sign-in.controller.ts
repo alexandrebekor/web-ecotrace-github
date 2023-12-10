@@ -4,7 +4,7 @@ import { SignInService } from '@/services/sign-in.service'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
-export const SignIn = async (request: FastifyRequest, response: FastifyReply) => {
+export const signIn = async (request: FastifyRequest, response: FastifyReply) => {
 	const schema = z.object({
 		email: z.string().email(),
 		password: z.string().min(6)

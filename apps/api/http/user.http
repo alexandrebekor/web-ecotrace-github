@@ -1,0 +1,1 @@
+GET {{$dotenv HOST_URL}}/api/users/alexandrebekor

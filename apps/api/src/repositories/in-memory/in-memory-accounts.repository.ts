@@ -12,7 +12,6 @@ export class InMemoryAccountsRepository implements AccountsRepository {
 			'id': 0,
 			'node_id': '',
 			'avatar_url': '',
-			'gravatar_id': '',
 			'url': '',
 			'html_url': '',
 			'followers_url': '',
@@ -44,6 +43,10 @@ export class InMemoryAccountsRepository implements AccountsRepository {
 	}
 
 	async getRepositories(username: string): Promise<Repositories | null> {
-		throw new Error(username)
+		if(username === 'usernamewrong') {
+			return null
+		}
+
+		return []
 	}
 }

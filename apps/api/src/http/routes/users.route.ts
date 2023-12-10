@@ -1,6 +1,7 @@
 import { FastifyInstance } from 'fastify'
-import { signUp } from '../controllers/sign-up.controller'
+import { findUser } from '../controllers/find-user.controller'
 
 export const users = async (app: FastifyInstance) => {
-	app.post('/', signUp)
+	app.get('/:username', findUser)
+	app.get('/:username/repositories', findUser)
 }
