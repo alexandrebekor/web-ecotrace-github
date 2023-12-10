@@ -2,8 +2,8 @@ POST {{$dotenv HOST_URL}}/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "staff5@alexandrebekor.com",
-  "username": "william",
+  "email": "staff6@alexandrebekor.com",
+  "username": "alexandrebekor",
   "password": "123456"
 }
 
