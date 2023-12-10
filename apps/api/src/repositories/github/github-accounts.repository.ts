@@ -1,3 +1,4 @@
+import { ApiNotResponding } from '@/services/errors/api-not-responding.error'
 import { AccountsRepository } from '../accounts.repository'
 
 export class GithubAccountsRepository implements AccountsRepository {
@@ -19,7 +20,7 @@ export class GithubAccountsRepository implements AccountsRepository {
 			const user = await response.json()
 			return user
 		} catch (error) {
-			throw new Error('Internal Error')
+			throw new ApiNotResponding()
 		}
 	}
   
@@ -39,7 +40,7 @@ export class GithubAccountsRepository implements AccountsRepository {
 			const repositories = await response.json()
 			return repositories
 		} catch (error) {
-			throw new Error('Internal Error')
+			throw new ApiNotResponding()
 		}
 	}
 }
