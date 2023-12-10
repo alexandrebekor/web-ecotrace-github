@@ -2,6 +2,7 @@ import bcryptjs from 'bcryptjs'
 
 import { UsersRepository } from '@/repositories/users.repository'
 import { CredentialsInvalid } from './errors/credentials-invalid.error'
+import { User } from '@prisma/client'
 
 type SignInServiceRequest = {
   email: string
@@ -9,7 +10,7 @@ type SignInServiceRequest = {
 }
 
 type SignInServiceResponse = {
-  message: string
+  user: User
 }
 
 export class SignInService {
@@ -29,7 +30,7 @@ export class SignInService {
 		}
 
 		return {
-			message: 'Entrou!'
+			user
 		}
 	}
 }

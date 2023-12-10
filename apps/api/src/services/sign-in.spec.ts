@@ -1,56 +1,48 @@
+import { beforeEach, describe, expect, it } from 'vitest'
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users.repository'
-import { describe, expect, it } from 'vitest'
-import { SignUpService } from './sign-up.service'
 import { SignInService } from './sign-in.service'
 import { CredentialsInvalid } from './errors/credentials-invalid.error'
-import { InMemoryAccountsRepository } from '@/repositories/in-memory/in-memory-accounts.repository'
+import bcryptjs from 'bcryptjs'
+
+let usersRepository: InMemoryUsersRepository
+let sut: SignInService
 
 describe('Sign In user', () => {
-	it('should be able sign in', async () => {
-		const usersRepository = new InMemoryUsersRepository()
-		const accountsRepository = new InMemoryAccountsRepository()
-		const signUpService = new SignUpService(usersRepository, accountsRepository)
+	beforeEach(() => {
+		usersRepository = new InMemoryUsersRepository()
+		sut = new SignInService(usersRepository)
+	})
 
-		await signUpService.execute({
+	it('should be able sign in', async () => {
+		await usersRepository.create({
 			email: 'staff@agenciabekor.com',
 			username: 'alexandrebekor',
-			password: 'alexandre123'
+			password: await bcryptjs.hash('alexandre', 6)
 		})
 
-		const signInService = new SignInService(usersRepository)
-
-		const user = await signInService.execute({
+		const { user } = await sut.execute({
 			email: 'staff@agenciabekor.com',
-			password: 'alexandre123'
+			password: 'alexandre'
 		})
 
-		expect(user.message).toEqual('Entrou!')
+		expect(user.id).toEqual(expect.any(String))
 	})
 
 	it('should not be able sign in with wrong password', async () => {
-		const usersRepository = new InMemoryUsersRepository()
-		const accountsRepository = new InMemoryAccountsRepository()
-		const signUpService = new SignUpService(usersRepository, accountsRepository)
-
-		await signUpService.execute({
+		await usersRepository.create({
 			email: 'staff@agenciabekor.com',
 			username: 'alexandrebekor',
-			password: 'alexandre123'
+			password: await bcryptjs.hash('alexandre', 6)
 		})
 
-		const signInService = new SignInService(usersRepository)
-
-		await expect(() => signInService.execute({
+		await expect(() => sut.execute({
 			email: 'staff@agenciabekor.com',
-			password: 'alexandre'
+			password: 'alexandre12'
 		})).rejects.toBeInstanceOf(CredentialsInvalid)
 	})
 
 	it('should not be able sign in with email not subscribed', async () => {
-		const usersRepository = new InMemoryUsersRepository()
-		const signInService = new SignInService(usersRepository)
-
-		await expect(() => signInService.execute({
+		await expect(() => sut.execute({
 			email: 'staff@agenciabekor.com',
 			password: 'alexandre'
 		})).rejects.toBeInstanceOf(CredentialsInvalid)

@@ -24,7 +24,7 @@ export const SignIn = async (request: FastifyRequest, response: FastifyReply) =>
 		return response.status(200).send(user)
 	} catch (error) {
 		if(error instanceof CredentialsInvalid) {
-			return response.status(500).send({
+			return response.status(400).send({
 				message: error.message
 			})
 		}
