@@ -5,8 +5,13 @@ import { PrismaClientInitializationError } from '@prisma/client/runtime/library'
 import { NotAuthorized } from './services/errors/not-authorized.error'
 import { ApiNotResponding } from './services/errors/api-not-responding.error'
 import { routes } from './http/routes'
+import fastifyJwt from '@fastify/jwt'
 
 export const app = server()
+
+app.register(fastifyJwt, {
+	secret: env.JWT
+})
 
 app.register(routes, {
 	prefix: '/api'

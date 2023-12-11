@@ -22,12 +22,21 @@ export const signUp = async (request: FastifyRequest, response: FastifyReply) =>
 		
 		const signUpService = new SignUpService(usersRepository, accountsRepository)
 
-		await signUpService.execute({
+		const { user } = await signUpService.execute({
 			username,
 			email,
 			password
 		})
 		
+		const token = await response.jwtSign({}, {
+			sign: {
+				sub: user.id
+			}
+		})
+
+		return response.status(200).send({
+			token
+		})
 	} catch (error) {
 		if(error instanceof UserAlreadyExists) {
 			return response.status(409).send({
@@ -43,6 +52,4 @@ export const signUp = async (request: FastifyRequest, response: FastifyReply) =>
 
 		throw error
 	}
-
-	return response.status(201).send()
 }

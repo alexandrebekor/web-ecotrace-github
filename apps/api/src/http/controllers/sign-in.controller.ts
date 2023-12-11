@@ -16,12 +16,20 @@ export const signIn = async (request: FastifyRequest, response: FastifyReply) =>
 		const usersRepository = new PrismaUsersRepository()
 		const signInService = new SignInService(usersRepository)
 
-		const user = await signInService.execute({
+		const { user } = await signInService.execute({
 			email,
 			password
 		})
 
-		return response.status(200).send(user)
+		const token = await response.jwtSign({}, {
+			sign: {
+				sub: user.id
+			}
+		})
+
+		return response.status(200).send({
+			token
+		})
 	} catch (error) {
 		if(error instanceof CredentialsInvalid) {
 			return response.status(400).send({

@@ -6,7 +6,8 @@ const schema = z.object({
 	PORT: z.coerce.number().default(3333),
 	HOST_URL: z.string(),
 	NODE_ENV: z.enum(['development', 'production', 'test']),
-	TOKEN_GITHUB: z.string()
+	TOKEN_GITHUB: z.string(),
+	JWT: z.string().min(6)
 })
 
 const _env = schema.safeParse(process.env)
