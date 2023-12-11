@@ -1,17 +1,30 @@
-POST {{$dotenv HOST_URL}}/api/auth/register
+# @name signUp
+POST {{$dotenv HOST_URL}}/api/auth
 Content-Type: application/json
 
 {
-  "email": "staff6@alexandrebekor.com",
+  "email": "staff7@alexandrebekor.com",
   "username": "alexandrebekor",
   "password": "123456"
 }
 
 ###
-POST {{$dotenv HOST_URL}}/api/auth/login
+# @name signIn
+POST {{$dotenv HOST_URL}}/api/login
 Content-Type: application/json
 
 {
   "email": "staff@alexandrebekor.com",
   "password": "123456"
 }
+###
+@token = {{signIn.response.body.token}}
+
+# @name findUser
+GET {{$dotenv HOST_URL}}/api/users/alexandrebekor
+Authorization: Bearer {{token}}
+
+###
+# @name getAllRepositories
+GET {{$dotenv HOST_URL}}/api/users/alexandrebekor/repos
+Authorization: Bearer {{token}}

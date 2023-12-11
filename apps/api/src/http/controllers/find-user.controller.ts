@@ -1,6 +1,6 @@
 import { GithubPrivateAccountsRepository } from '@/repositories/github-private/github-private-accounts.repository'
 import { InvalidUsername } from '@/services/errors/invalid-username.error'
-import { FindUserService } from '@/services/find-user'
+import { FindUserService } from '@/services/find-user.service'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 

@@ -1,20 +1,20 @@
 import server, { FastifyError, FastifyReply, FastifyRequest } from 'fastify'
-import { users } from './http/routes/users.route'
 import { ZodError } from 'zod'
 import { env } from './lib/env'
 import { PrismaClientInitializationError } from '@prisma/client/runtime/library'
-import { auth } from './http/routes/auth.route'
 import { NotAuthorized } from './services/errors/not-authorized.error'
 import { ApiNotResponding } from './services/errors/api-not-responding.error'
+import { routes } from './http/routes'
+import fastifyJwt from '@fastify/jwt'
 
 export const app = server()
 
-app.register(users, {
-	prefix: '/api/users'
+app.register(fastifyJwt, {
+	secret: env.JWT
 })
 
-app.register(auth, {
-	prefix: '/api/auth'
+app.register(routes, {
+	prefix: '/api'
 })
 
 app.setErrorHandler((error: FastifyError, _request: FastifyRequest, response: FastifyReply) => {
