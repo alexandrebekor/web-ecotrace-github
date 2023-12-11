@@ -1,6 +1,6 @@
 import { InMemoryAccountsRepository } from '@/repositories/in-memory/in-memory-accounts.repository'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { FindUserService } from './find-user'
+import { FindUserService } from './find-user.service'
 import { InvalidUsername } from './errors/invalid-username.error'
 
 let accountsRepository: InMemoryAccountsRepository

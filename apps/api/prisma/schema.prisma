@@ -11,9 +11,9 @@ datasource db {
 }
 
 model User {
-  id               String  @id @default(uuid())
+  id               String   @id @default(uuid())
   username         String
-  email            String  @unique
+  email            String   @unique
   password         String
   name             String?
   followers        Int?
@@ -24,6 +24,17 @@ model User {
   company          String?
   site             String?
   avatar_url       String?
+  created_at       DateTime @default(now())
+
+  Search Search[]
+}
+
+model Search {
+  id           String @id @default(uuid())
+  user         User   @relation(fields: [userId], references: [id])
+  userId       String
+  username     String
+  repositories Int
 
   created_at DateTime @default(now())
 }
