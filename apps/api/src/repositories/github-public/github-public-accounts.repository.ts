@@ -1,7 +1,7 @@
 import { ApiNotResponding } from '@/services/errors/api-not-responding.error'
 import { AccountsRepository } from '../accounts.repository'
 
-export class GithubAccountsRepository implements AccountsRepository {
+export class GithubPublicAccountsRepository implements AccountsRepository {
 	private base_url = 'https://api.github.com'
 
 	async findByUsername(username: string) {

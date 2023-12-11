@@ -1,7 +1,7 @@
 import { AccountsRepository } from '@/repositories/accounts.repository'
 import { Repositories } from '@/types/accounts'
 import { sanitizeText } from '@/utils/format-text'
-import { InvalidUsername } from './errors/invalid-username.error'
+import { ResourceNotFound } from './errors/resource-not-found.error'
 
 type GetAllRepositoriesServiceRequest = {
   username: string
@@ -20,7 +20,7 @@ export class GetAllRepositoriesService {
 		const repositories = await this.accountsRepository.getRepositories(formattedUsername)
 
 		if(!repositories) {
-			throw new InvalidUsername()
+			throw new ResourceNotFound()
 		}
 
 		return {

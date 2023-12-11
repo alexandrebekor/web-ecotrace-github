@@ -1,7 +1,6 @@
 import { Account, Repositories } from '@/types/accounts'
 import { AccountsRepository } from '../accounts.repository'
 import { octokit } from '@/lib/github'
-import { ApiNotResponding } from '@/services/errors/api-not-responding.error'
 
 export class GithubPrivateAccountsRepository implements AccountsRepository{
 	async findByUsername(username: string): Promise<Account | null> {
@@ -9,10 +8,10 @@ export class GithubPrivateAccountsRepository implements AccountsRepository{
 			const { data : user } = await octokit.request('GET /users/{username}', {
 				username
 			})
-	
+
 			return user
 		} catch (error) {
-			throw new ApiNotResponding()
+			return null
 		}
 	}
 
@@ -24,7 +23,7 @@ export class GithubPrivateAccountsRepository implements AccountsRepository{
 	
 			return repositories
 		} catch (error) {
-			throw new ApiNotResponding()
+			return null
 		}
 	}
 }

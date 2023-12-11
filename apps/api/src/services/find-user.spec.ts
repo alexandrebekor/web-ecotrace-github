@@ -1,7 +1,7 @@
 import { InMemoryAccountsRepository } from '@/repositories/in-memory/in-memory-accounts.repository'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { FindUserService } from './find-user.service'
-import { InvalidUsername } from './errors/invalid-username.error'
+import { ResourceNotFound } from './errors/resource-not-found.error'
 
 let accountsRepository: InMemoryAccountsRepository
 let sut: FindUserService
@@ -23,6 +23,6 @@ describe('Find user by username', () => {
 	it('should not be able find a user with username invalid', async () => {
 		await expect(() => sut.execute({
 			username: 'username wrong'
-		})).rejects.toBeInstanceOf(InvalidUsername)
+		})).rejects.toBeInstanceOf(ResourceNotFound)
 	})
 })

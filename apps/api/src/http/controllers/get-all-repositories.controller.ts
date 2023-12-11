@@ -1,5 +1,5 @@
 import { GithubPrivateAccountsRepository } from '@/repositories/github-private/github-private-accounts.repository'
-import { InvalidUsername } from '@/services/errors/invalid-username.error'
+import { ResourceNotFound } from '@/services/errors/resource-not-found.error'
 import { GetAllRepositoriesService } from '@/services/get-all-repositories'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
@@ -21,10 +21,12 @@ export const getAllRepositories = async (request: FastifyRequest, response: Fast
 
 		return response.status(200).send(repositories)
 	} catch (error) {
-		if(error instanceof InvalidUsername) {
-			return response.status(400).send({
+		if(error instanceof ResourceNotFound) {
+			return response.status(404).send({
 				message: error.message
 			})
 		}
+
+		throw error
 	}
 }

@@ -1,11 +1,11 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
-import { GithubAccountsRepository } from '@/repositories/github/github-accounts.repository'
 import { PrismaUsersRepository } from '@/repositories/prisma/prisma-users.repository'
 import { InvalidUsername } from '@/services/errors/invalid-username.error'
 import { UserAlreadyExists } from '@/services/errors/user-already-exists.error'
 import { SignUpService } from '@/services/sign-up.service'
+import { GithubPrivateAccountsRepository } from '@/repositories/github-private/github-private-accounts.repository'
 
 export const signUp = async (request: FastifyRequest, response: FastifyReply) => {
 	const schema = z.object({
@@ -18,7 +18,7 @@ export const signUp = async (request: FastifyRequest, response: FastifyReply) =>
 
 	try {
 		const usersRepository = new PrismaUsersRepository()
-		const accountsRepository = new GithubAccountsRepository()
+		const accountsRepository = new GithubPrivateAccountsRepository()
 		
 		const signUpService = new SignUpService(usersRepository, accountsRepository)
 

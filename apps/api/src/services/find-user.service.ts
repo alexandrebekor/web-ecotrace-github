@@ -1,7 +1,7 @@
 import { AccountsRepository } from '@/repositories/accounts.repository'
 import { sanitizeText } from '@/utils/format-text'
-import { InvalidUsername } from './errors/invalid-username.error'
 import { Account } from '@/types/accounts'
+import { ResourceNotFound } from './errors/resource-not-found.error'
 
 type FindUserServiceRequest = {
   username: string
@@ -19,7 +19,7 @@ export class FindUserService {
 		const account = await this.accountsRepository.findByUsername(formattedUsername)
 
 		if(!account) {
-			throw new InvalidUsername()
+			throw new ResourceNotFound()
 		}
 
 		return {
