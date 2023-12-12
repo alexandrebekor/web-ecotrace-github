@@ -7,11 +7,18 @@ import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-user
 import { InMemoryAccountsRepository } from '@/repositories/in-memory/in-memory-accounts.repository'
 import { InMemorySearchesRepository } from '@/repositories/in-memory/in-memory-searches.repository'
 import { ResourceNotFound } from './errors/resource-not-found.error'
+import { randomUUID } from 'crypto'
+import { AccountNotFound } from './errors/account-not-found.error'
 
 let usersRepository: UsersRepository
 let accountsRepository: AccountsRepository
 let searchesRepository: SearchesRepository
 let sut: CreateSearchService
+
+const email = 'staff@alexandrebekor.com'
+const username = 'nickname'
+const password = 'password'
+const usernameWrong = 'username wrong'
 
 describe('Create a new search', () => {
 	beforeEach(() => {
@@ -23,37 +30,37 @@ describe('Create a new search', () => {
 
 	it('should not be able to search with invalid user id', async () => {
 		await expect(() => sut.execute({
-			userId: 'id-wrong',
-			username: 'alexandrebekor'
+			userId: randomUUID(),
+			username
 		})).rejects.toBeInstanceOf(ResourceNotFound)
 	})
 
 	it('should not be able to search if username is invalid', async () => {
 		const user = await usersRepository.create({
-			email: 'staff@agenciabekor.com',
-			username: 'alexandrebekor',
-			password: '123456'
+			email,
+			username,
+			password
 		})
 
 		await expect(() => sut.execute({
 			userId: user.id,
-			username: 'username wrong'
-		})).rejects.toBeInstanceOf(ResourceNotFound)
+			username: usernameWrong
+		})).rejects.toBeInstanceOf(AccountNotFound)
 	})
 
 	it('should be able to create a new search', async () => {
 		const user = await usersRepository.create({
-			email: 'staff@agenciabekor.com',
-			username: 'alexandrebekor',
-			password: '123456'
+			email,
+			username,
+			password
 		})
 
 		const search = await sut.execute({
 			userId: user.id,
-			username: 'alexandrebekor'
+			username
 		})
     
-		expect(search.username).toEqual('alexandrebekor')
+		expect(search.username).toEqual(username)
 		expect(search.repositories).toEqual(expect.any(Array))
 	})
 })

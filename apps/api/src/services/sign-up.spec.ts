@@ -3,12 +3,16 @@ import { it, expect, describe, beforeEach } from 'vitest'
 import { SignUpService } from './sign-up.service'
 import { compare } from 'bcryptjs'
 import { UserAlreadyExists } from './errors/user-already-exists.error'
-import { InvalidUsername } from './errors/invalid-username.error'
 import { InMemoryAccountsRepository } from '@/repositories/in-memory/in-memory-accounts.repository'
+import { AccountNotFound } from './errors/account-not-found.error'
 
 let usersRepository: InMemoryUsersRepository
 let accountsRepository: InMemoryAccountsRepository
 let sut: SignUpService
+
+const email = 'teste@email.com'
+const username = 'nickname'
+const password = 'password'
 
 describe('Sign Up user', () => {
 	beforeEach(() => {
@@ -19,9 +23,9 @@ describe('Sign Up user', () => {
 
 	it('should be able to sign up', async () => {
 		const { user } = await sut.execute({
-			username: 'alexandrebekor',
-			email: 'staff@agenciabekor.com',
-			password: '123456'
+			username,
+			email,
+			password
 		})
 
 		expect(user.id).toEqual(expect.any(String))
@@ -29,36 +33,34 @@ describe('Sign Up user', () => {
   
 	it('should hash the password', async () => {
 		const { user } = await sut.execute({
-			username: 'alexandrebekor',
-			email: 'staff@agenciabekor.com',
-			password: '123456'
+			username,
+			email,
+			password
 		})
 
-		const isHashPassword = await compare('123456', user.password)
+		const isHashPassword = await compare(password, user.password)
 		expect(isHashPassword).toBe(true)
 	})
 
 	it('should not be able to create a new user if email already exists', async () => {
-		const email = 'alexandre@bekor.com'
-
 		await sut.execute({
-			username: 'alexandrebekor',
+			username,
 			email,
-			password: '123456'
+			password
 		})
 
 		await expect(() => sut.execute({
-			username: 'alexandrebekor',
+			username,
 			email,
-			password: '123456'
+			password
 		})).rejects.toBeInstanceOf(UserAlreadyExists)
 	})
 
 	it('should not be able to create a new user with a username without account in github', async () => {
 		await expect(() => sut.execute({
 			username: 'username wrong',
-			email: 'alexandre@bekor.com',
-			password: '123456'
-		})).rejects.toBeInstanceOf(InvalidUsername)
+			email,
+			password
+		})).rejects.toBeInstanceOf(AccountNotFound)
 	})
 })

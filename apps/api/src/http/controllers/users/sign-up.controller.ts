@@ -1,9 +1,9 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
-import { InvalidUsername } from '@/services/errors/invalid-username.error'
 import { UserAlreadyExists } from '@/services/errors/user-already-exists.error'
 import { makeSignUpFactory } from '@/services/factories/make-sign-up.factory'
+import { AccountNotFound } from '@/services/errors/account-not-found.error'
 
 export const signUp = async (request: FastifyRequest, response: FastifyReply) => {
 	const schema = z.object({
@@ -39,7 +39,7 @@ export const signUp = async (request: FastifyRequest, response: FastifyReply) =>
 			})
 		}
 
-		if(error instanceof InvalidUsername) {
+		if(error instanceof AccountNotFound) {
 			return response.status(404).send({
 				message: error.message
 			})

@@ -1,6 +1,5 @@
-import { GithubPrivateAccountsRepository } from '@/repositories/github-private/github-private-accounts.repository'
-import { ResourceNotFound } from '@/services/errors/resource-not-found.error'
-import { FindUserService } from '@/services/find-user.service'
+import { AccountNotFound } from '@/services/errors/account-not-found.error'
+import { makeGetAccountByUsername } from '@/services/factories/make-get-account-by-username.factory'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
@@ -12,8 +11,7 @@ export const getAccountByUsername = async (request: FastifyRequest, response: Fa
 	const { username } = schema.parse(request.params)
 
 	try {
-		const accountsRepository = new GithubPrivateAccountsRepository()
-		const findUserService = new FindUserService(accountsRepository)
+		const findUserService = makeGetAccountByUsername()
 
 		const { account } = await findUserService.execute({
 			username
@@ -21,7 +19,7 @@ export const getAccountByUsername = async (request: FastifyRequest, response: Fa
 
 		return response.status(200).send(account)
 	} catch (error) {
-		if(error instanceof ResourceNotFound) {
+		if(error instanceof AccountNotFound) {
 			return response.status(404).send({
 				message: error.message
 			})

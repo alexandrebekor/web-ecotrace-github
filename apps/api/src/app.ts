@@ -7,6 +7,7 @@ import { ApiNotResponding } from './services/errors/api-not-responding.error'
 import { userRoutes } from './http/controllers/users/routes'
 import fastifyJwt from '@fastify/jwt'
 import { accountsRoutes } from './http/controllers/accounts/routes'
+import { searchesRoutes } from './http/controllers/searches/routes'
 
 export const app = server()
 
@@ -19,6 +20,10 @@ app.register(userRoutes, {
 })
 
 app.register(accountsRoutes, {
+	prefix: '/api'
+})
+
+app.register(searchesRoutes, {
 	prefix: '/api'
 })
 

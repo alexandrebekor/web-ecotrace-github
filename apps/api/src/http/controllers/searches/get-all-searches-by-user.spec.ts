@@ -9,7 +9,7 @@ const username = 'alexandrebekor'
 const email = 'test@email.com'
 const password = 'password'
 
-describe('E2E: Get user profile', () => {
+describe('E2E: Get all searches by User', () => {
 	beforeAll(async () => {
 		await app.ready()
 	})
@@ -18,21 +18,31 @@ describe('E2E: Get user profile', () => {
 		await app.close()
 	})
 
-	it('should be able to get profile', async () => {
+	it('should be able to get searches', async () => {
 		const { token } = await createAndAuthenticateUser({
 			username,
 			email,
 			password
 		})
-
+    
+		await request(app.server)
+			.post('/api/searches')
+			.set('Authorization', `Bearer ${token}`)
+			.send({
+				username
+			})
+    
 		const response = await request(app.server)
-			.get('/api/me')
+			.get('/api/searches')
 			.set('Authorization', `Bearer ${token}`)
 			.send()
 
 		expect(response.statusCode).toEqual(200)
-		expect(response.body).toEqual(expect.objectContaining({
-			email
-		}))
+		expect(response.body.searches).toHaveLength(1)
+		expect(response.body.searches).toEqual([
+			expect.objectContaining({
+				username
+			})
+		])
 	})
 })
