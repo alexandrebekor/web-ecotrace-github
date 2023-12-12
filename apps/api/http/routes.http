@@ -20,8 +20,8 @@ Content-Type: application/json
 ###
 @token = {{signIn.response.body.token}}
 
-# @name findUser
-GET {{$dotenv HOST_URL}}/api/users/1587649
+# @name profile
+GET {{$dotenv HOST_URL}}/api/me
 Authorization: Bearer {{token}}
 
 ###

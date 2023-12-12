@@ -58,10 +58,6 @@ export class UpdateUserService {
 			...account
 		})
 
-		if(!user) {
-			throw new ResourceNotFound()
-		}
-
 		return {
 			user
 		}
