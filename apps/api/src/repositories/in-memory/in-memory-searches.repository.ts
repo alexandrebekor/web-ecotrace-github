@@ -19,23 +19,19 @@ export class InMemorySearchesRepository implements SearchesRepository {
 		return search
 	}
 
-	async getAllSearchesByUser(userId: string) {
+	async getAllByUser(userId: string) {
 		const searches = this.searches.filter(search => search.userId === userId)
-
-		if(!searches) {
-			return null
-		}
 
 		return searches
 	}
 
-	async deleteSearch(searchId: string) {
-		const searches = this.searches.filter(search => search.id !== searchId)
+	async delete(id: string) {
+		const search = this.searches.find(search => search.id === id)
 
-		if(!searches) {
+		if(!search) {
 			return null
 		}
 
-		return searches
+		return search
 	}
 }

@@ -3,7 +3,7 @@ import { AccountsRepository } from '../accounts.repository'
 export class GithubPublicAccountsRepository implements AccountsRepository {
 	private base_url = 'https://api.github.com'
 
-	async findByUsername(username: string) {
+	async getByUsername(username: string) {
 		try {
 			const response = await fetch(`${this.base_url}/users/${username}`, {
 				method: 'GET',
@@ -23,7 +23,7 @@ export class GithubPublicAccountsRepository implements AccountsRepository {
 		}
 	}
   
-	async getRepositories(username: string) {
+	async getAllRepositoriesByUsername(username: string) {
 		try {
 			const response = await fetch(`${this.base_url}/users/${username}/repos`, {
 				method: 'GET',

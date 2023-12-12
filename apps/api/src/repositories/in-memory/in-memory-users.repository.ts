@@ -27,7 +27,7 @@ export class InMemoryUsersRepository implements UsersRepository {
 		return user
 	}
 
-	async findByEmail(email: string) {
+	async getByEmail(email: string) {
 		const user = this.users.find(user => user.email === email)
 
 		if(!user) {
@@ -37,8 +37,8 @@ export class InMemoryUsersRepository implements UsersRepository {
 		return user
 	}
 
-	async findById(userId: string) {
-		const user = this.users.find(user => user.id === userId)
+	async getById(id: string) {
+		const user = this.users.find(user => user.id === id)
 
 		if(!user) {
 			return null

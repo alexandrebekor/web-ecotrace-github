@@ -4,6 +4,7 @@ import { sanitizeText } from '@/utils/format-text'
 import { ResourceNotFound } from './errors/resource-not-found.error'
 import { UsersRepository } from '@/repositories/users.repository'
 import { Repositories } from '@/@types/accounts'
+import { AccountNotFound } from './errors/account-not-found.error'
 
 type CreateSearchServiceRequest = {
   userId: string,
@@ -19,14 +20,14 @@ export class CreateSearchService {
 	constructor(readonly usersRepository: UsersRepository,readonly searchesRepository: SearchesRepository, readonly accountsRepository: AccountsRepository) {}
 
 	async execute({ userId, username }: CreateSearchServiceRequest): Promise<CreateSearchServiceResponse> {
-		const user = await this.usersRepository.findById(userId)
+		const user = await this.usersRepository.getById(userId)
 
 		if(!user) {
 			throw new ResourceNotFound()
 		}
 		
 		const formatedUsername = sanitizeText(username)
-		const repositories = await this.accountsRepository.getRepositories(formatedUsername)
+		const repositories = await this.accountsRepository.getAllRepositoriesByUsername(formatedUsername)
 
 		if(!repositories) {
 			await this.searchesRepository.create({
@@ -35,7 +36,7 @@ export class CreateSearchService {
 				username: formatedUsername
 			})
 
-			throw new ResourceNotFound()
+			throw new AccountNotFound()
 		}
 
 		await this.searchesRepository.create({

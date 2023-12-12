@@ -7,6 +7,11 @@ import bcryptjs from 'bcryptjs'
 let usersRepository: InMemoryUsersRepository
 let sut: SignInService
 
+const email = 'teste@email.com'
+const username = 'nickname'
+const password = 'password'
+const passwordWrong = 'passwordWrong'
+
 describe('Sign In user', () => {
 	beforeEach(() => {
 		usersRepository = new InMemoryUsersRepository()
@@ -15,14 +20,14 @@ describe('Sign In user', () => {
 
 	it('should be able sign in', async () => {
 		await usersRepository.create({
-			email: 'staff@agenciabekor.com',
-			username: 'alexandrebekor',
-			password: await bcryptjs.hash('alexandre', 6)
+			email,
+			username,
+			password: await bcryptjs.hash(password, 6)
 		})
 
 		const { user } = await sut.execute({
-			email: 'staff@agenciabekor.com',
-			password: 'alexandre'
+			email,
+			password
 		})
 
 		expect(user.id).toEqual(expect.any(String))
@@ -30,21 +35,21 @@ describe('Sign In user', () => {
 
 	it('should not be able sign in with wrong password', async () => {
 		await usersRepository.create({
-			email: 'staff@agenciabekor.com',
-			username: 'alexandrebekor',
-			password: await bcryptjs.hash('alexandre', 6)
+			email,
+			username,
+			password: await bcryptjs.hash(password, 6)
 		})
 
 		await expect(() => sut.execute({
-			email: 'staff@agenciabekor.com',
-			password: 'alexandre12'
+			email,
+			password: passwordWrong
 		})).rejects.toBeInstanceOf(CredentialsInvalid)
 	})
 
 	it('should not be able sign in with email not subscribed', async () => {
 		await expect(() => sut.execute({
-			email: 'staff@agenciabekor.com',
-			password: 'alexandre'
+			email,
+			password
 		})).rejects.toBeInstanceOf(CredentialsInvalid)
 	})
 })

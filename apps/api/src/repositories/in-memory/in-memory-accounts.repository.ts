@@ -2,7 +2,7 @@ import { Account, Repositories } from '@/@types/accounts'
 import { AccountsRepository } from '../accounts.repository'
 
 export class InMemoryAccountsRepository implements AccountsRepository {
-	async findByUsername(username: string): Promise<Account | null> {
+	async getByUsername(username: string): Promise<Account | null> {
 		if(username === 'usernamewrong') {
 			return null
 		}
@@ -42,7 +42,7 @@ export class InMemoryAccountsRepository implements AccountsRepository {
 		}
 	}
 
-	async getRepositories(username: string): Promise<Repositories | null> {
+	async getAllRepositoriesByUsername(username: string): Promise<Repositories | null> {
 		if(username === 'usernamewrong') {
 			return null
 		}

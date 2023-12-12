@@ -15,17 +15,13 @@ export class GetAllSearchesByUserService {
 	constructor(readonly usersRepository: UsersRepository, readonly searchesRepository: SearchesRepository) {}
 
 	async execute ({ userId }: GetAllSearchesByUserServiceRequest): Promise<GetAllSearchesByUserServiceResponse> {
-		const user = await this.usersRepository.findById(userId)
+		const user = await this.usersRepository.getById(userId)
 
 		if(!user) {
 			throw new ResourceNotFound()
 		}
 
-		const searches = await this.searchesRepository.getAllSearchesByUser(userId)
-  
-		if(!searches) {
-			throw new ResourceNotFound()
-		}
+		const searches = await this.searchesRepository.getAllByUser(userId)
 
 		return {
 			searches

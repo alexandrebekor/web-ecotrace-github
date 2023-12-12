@@ -17,7 +17,7 @@ export class SignInService {
 	constructor(readonly usersRepository: UsersRepository){}
 
 	async execute({ email, password }: SignInServiceRequest): Promise<SignInServiceResponse> {
-		const user = await this.usersRepository.findByEmail(email)
+		const user = await this.usersRepository.getByEmail(email)
 
 		if(!user) {
 			throw new CredentialsInvalid()

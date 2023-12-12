@@ -1,7 +1,7 @@
 import { AccountsRepository } from '@/repositories/accounts.repository'
 import { Repositories } from '@/@types/accounts'
 import { sanitizeText } from '@/utils/format-text'
-import { ResourceNotFound } from './errors/resource-not-found.error'
+import { AccountNotFound } from './errors/account-not-found.error'
 
 type GetAllRepositoriesServiceRequest = {
   username: string
@@ -17,10 +17,10 @@ export class GetAllRepositoriesService {
 
 	async execute({ username }: GetAllRepositoriesServiceRequest): Promise<GetAllRepositoriesServiceResponse> {
 		const formattedUsername = sanitizeText(username)
-		const repositories = await this.accountsRepository.getRepositories(formattedUsername)
+		const repositories = await this.accountsRepository.getAllRepositoriesByUsername(formattedUsername)
 
 		if(!repositories) {
-			throw new ResourceNotFound()
+			throw new AccountNotFound()
 		}
 
 		return {

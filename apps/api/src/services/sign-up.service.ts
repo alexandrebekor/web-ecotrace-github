@@ -4,8 +4,8 @@ import { User } from '@prisma/client'
 import bcryptjs from 'bcryptjs'
 import { UserAlreadyExists } from './errors/user-already-exists.error'
 import { AccountsRepository } from '@/repositories/accounts.repository'
-import { InvalidUsername } from './errors/invalid-username.error'
 import { sanitizeText } from '@/utils/format-text'
+import { AccountNotFound } from './errors/account-not-found.error'
 
 type SignInServiceRequest = {
   username: string
@@ -22,17 +22,17 @@ export class SignUpService {
 
 	async execute ({ username, email, password }: SignInServiceRequest): Promise<SignInServiceResponse> {
 		
-		const hasUserWithThisEmail = await this.usersRepository.findByEmail(email)
+		const hasUserWithThisEmail = await this.usersRepository.getByEmail(email)
 
 		if(hasUserWithThisEmail) {
 			throw new UserAlreadyExists()
 		}
 
 		const usernameFormated = sanitizeText(username)
-		const userAccount = await this.accountsRepository.findByUsername(usernameFormated)
+		const userAccount = await this.accountsRepository.getByUsername(usernameFormated)
 
 		if(!userAccount) {
-			throw new InvalidUsername()
+			throw new AccountNotFound()
 		}
 
 		const password_hash = await bcryptjs.hash(password, 6)

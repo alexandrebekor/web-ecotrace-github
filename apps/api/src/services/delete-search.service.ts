@@ -14,7 +14,7 @@ export class DeleteSearchService {
 	constructor(readonly searchesRepository: SearchesRepository) {}
 
 	async execute({ searchId }: DeleteSearchServiceRequest): Promise<DeleteSearchServiceResponse> {
-		const search = await this.searchesRepository.deleteSearch(searchId)
+		const search = await this.searchesRepository.delete(searchId)
 
 		if(!search) {
 			throw new ResourceNotFound()

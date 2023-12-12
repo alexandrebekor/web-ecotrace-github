@@ -4,9 +4,14 @@ import { GetUserProfileService } from './get-user-profile.service'
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users.repository'
 import bcryptjs from 'bcryptjs'
 import { ResourceNotFound } from './errors/resource-not-found.error'
+import { randomUUID } from 'crypto'
 
 let usersRepository: UsersRepository
 let sut: GetUserProfileService
+
+const email = 'teste@email.com'
+const username = 'nickname'
+const password = 'password'
 
 describe('Get user Profile', () => {
 	beforeEach(() => {
@@ -16,9 +21,9 @@ describe('Get user Profile', () => {
 
 	it('should be able to get profile', async () => {
 		const newUser = await usersRepository.create({
-			email: 'staff@agenciabekor.com',
-			username: 'alexandrebekor',
-			password: await bcryptjs.hash('123456', 6)
+			email,
+			username,
+			password: await bcryptjs.hash(password, 6)
 		})
 
 		const { user } = await sut.execute({
@@ -30,7 +35,7 @@ describe('Get user Profile', () => {
 
 	it('should not be able to get profile if id not exists', async () => {
 		await expect(() => sut.execute({
-			userId: '123456'
+			userId: randomUUID()
 		})).rejects.toBeInstanceOf(ResourceNotFound)
 	})
 })
