@@ -10,6 +10,9 @@ jobs:
     timeout-minutes: 15
     runs-on: ubuntu-latest
 
+    env:
+      TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
+
     services:
       postgresql:
         image: bitnami/postgresql:latest
