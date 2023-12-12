@@ -5,6 +5,10 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import request from 'supertest'
 import { createAndAuthenticateUser } from '@/utils/test/create-and-authenticate-user'
 
+const username = 'alexandrebekor'
+const email = 'test@email.com'
+const password = 'password'
+
 describe('E2E: Delete search', () => {
 	beforeAll(async () => {
 		await app.ready()
@@ -15,18 +19,17 @@ describe('E2E: Delete search', () => {
 	})
 
 	it('should be able to delete search by id', async () => {
-		const username = 'alexandrebekor'
 		const { token } = await createAndAuthenticateUser({
 			username,
-			email: 'staff@alexandrebekor.com',
-			password: '123456'
+			email,
+			password
 		})
 
 		await request(app.server)
 			.post('/api/searches')
 			.set('Authorization', `Bearer ${token}`)
 			.send({
-				username: 'alexandrebekor'
+				username
 			})
 
 		const searchesResponse = await request(app.server)
