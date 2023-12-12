@@ -27,6 +27,33 @@ export class InMemoryUsersRepository implements UsersRepository {
 		return user
 	}
 
+	async update(id: string, data: User) {
+		const currentUser = this.users.find(user => user.id === id)
+
+		if(!currentUser) {
+			return null
+		}
+
+		const user = {
+			id,
+			username: data.username ?? currentUser.username,
+			email: data.email ?? currentUser.email,
+			password: data.password ?? currentUser.password,
+			name: data.name ?? currentUser.name,
+			followers: data.followers ?? currentUser.followers,
+			following: data.following ?? currentUser.following,
+			repositories: data.repositories ?? currentUser.repositories,
+			bio: data.bio ?? currentUser.bio,
+			twitter_username: data.twitter_username ?? currentUser.twitter_username,
+			company: data.company ?? currentUser.company,
+			site: data.site ?? currentUser.site,
+			avatar_url: data.avatar_url ?? currentUser.avatar_url,
+			created_at: currentUser.created_at
+		}
+
+		return user
+	}
+
 	async getByEmail(email: string) {
 		const user = this.users.find(user => user.email === email)
 

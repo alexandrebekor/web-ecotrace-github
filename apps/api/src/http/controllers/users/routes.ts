@@ -3,6 +3,7 @@ import { signUp } from './sign-up.controller'
 import { signIn } from './sign-in.controller'
 import { verifyJWT } from '@/http/middlewares/verify-jwt'
 import { getUserProfile } from './get-user-profile.controller'
+import { updateUser } from './update-user.controller'
 
 export const userRoutes = async (app: FastifyInstance) => {
 	// Public
@@ -11,4 +12,5 @@ export const userRoutes = async (app: FastifyInstance) => {
 
 	// Private
 	app.get('/me', { onRequest: [verifyJWT] }, getUserProfile)
+	app.post('/me', { onRequest: [verifyJWT] }, updateUser)
 }
