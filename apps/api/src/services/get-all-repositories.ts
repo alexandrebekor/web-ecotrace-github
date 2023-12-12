@@ -1,5 +1,5 @@
 import { AccountsRepository } from '@/repositories/accounts.repository'
-import { Repositories } from '@/types/accounts'
+import { Repositories } from '@/@types/accounts'
 import { sanitizeText } from '@/utils/format-text'
 import { ResourceNotFound } from './errors/resource-not-found.error'
 

@@ -22,7 +22,7 @@ export class GetAllSearchesByUserService {
 		}
 
 		const searches = await this.searchesRepository.getAllSearchesByUser(userId)
-    
+  
 		if(!searches) {
 			throw new ResourceNotFound()
 		}

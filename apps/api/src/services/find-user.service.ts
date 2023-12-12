@@ -1,6 +1,6 @@
 import { AccountsRepository } from '@/repositories/accounts.repository'
 import { sanitizeText } from '@/utils/format-text'
-import { Account } from '@/types/accounts'
+import { Account } from '@/@types/accounts'
 import { ResourceNotFound } from './errors/resource-not-found.error'
 
 type FindUserServiceRequest = {

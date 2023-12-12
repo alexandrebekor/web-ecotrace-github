@@ -4,8 +4,9 @@ import { env } from './lib/env'
 import { PrismaClientInitializationError } from '@prisma/client/runtime/library'
 import { NotAuthorized } from './services/errors/not-authorized.error'
 import { ApiNotResponding } from './services/errors/api-not-responding.error'
-import { routes } from './http/routes'
+import { userRoutes } from './http/controllers/users/routes'
 import fastifyJwt from '@fastify/jwt'
+import { accountsRoutes } from './http/controllers/accounts/routes'
 
 export const app = server()
 
@@ -13,7 +14,11 @@ app.register(fastifyJwt, {
 	secret: env.JWT
 })
 
-app.register(routes, {
+app.register(userRoutes, {
+	prefix: '/api'
+})
+
+app.register(accountsRoutes, {
 	prefix: '/api'
 })
 

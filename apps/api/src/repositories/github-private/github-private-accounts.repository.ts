@@ -1,4 +1,4 @@
-import { Account, Repositories } from '@/types/accounts'
+import { Account, Repositories } from '@/@types/accounts'
 import { AccountsRepository } from '../accounts.repository'
 import { octokit } from '@/lib/github'
 

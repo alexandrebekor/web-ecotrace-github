@@ -1,6 +1,5 @@
-import { PrismaUsersRepository } from '@/repositories/prisma/prisma-users.repository'
 import { CredentialsInvalid } from '@/services/errors/credentials-invalid.error'
-import { SignInService } from '@/services/sign-in.service'
+import { makeSignInFactory } from '@/services/factories/make-sign-in.factory'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
@@ -13,8 +12,7 @@ export const signIn = async (request: FastifyRequest, response: FastifyReply) =>
 	const { email, password } = schema.parse(request.body)
 
 	try {
-		const usersRepository = new PrismaUsersRepository()
-		const signInService = new SignInService(usersRepository)
+		const signInService = makeSignInFactory()
 
 		const { user } = await signInService.execute({
 			email,

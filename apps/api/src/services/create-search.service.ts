@@ -3,7 +3,7 @@ import { SearchesRepository } from '@/repositories/searches.repository'
 import { sanitizeText } from '@/utils/format-text'
 import { ResourceNotFound } from './errors/resource-not-found.error'
 import { UsersRepository } from '@/repositories/users.repository'
-import { Repositories } from '@/types/accounts'
+import { Repositories } from '@/@types/accounts'
 
 type CreateSearchServiceRequest = {
   userId: string,

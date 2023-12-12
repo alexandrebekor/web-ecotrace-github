@@ -7,6 +7,7 @@ const schema = z.object({
 	HOST_URL: z.string(),
 	NODE_ENV: z.enum(['development', 'production', 'test']),
 	TOKEN_GITHUB: z.string(),
+	DATABASE_URL: z.string(),
 	JWT: z.string().min(6)
 })
 

@@ -5,12 +5,15 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "prisma generate && tsx watch src/server.ts",
+    "predev": "prisma generate",
+    "dev": "tsx watch src/server.ts",
     "build": "tsup src --out-dir build",
     "start": "node build/server.js",
     "lint": "eslint",
-    "test": "vitest run",
-    "test:watch": "vitest",
+    "test": "vitest run --dir src/services",
+    "pretest:e2e": "prisma generate",
+    "test:e2e": "vitest run --dir src/http",
+    "test:watch": "vitest --dir src/services",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui"
   },
@@ -29,16 +32,18 @@
   "devDependencies": {
     "@types/bcryptjs": "2.4.6",
     "@types/node": "20.10.4",
+    "@types/supertest": "2.0.16",
     "@typescript-eslint/eslint-plugin": "6.13.2",
     "@typescript-eslint/parser": "6.13.2",
     "@vitest/coverage-v8": "1.0.2",
+    "vite-tsconfig-paths": "4.2.2",
     "@vitest/ui": "1.0.2",
+    "vitest": "1.0.2",
     "eslint": "8.55.0",
     "prisma": "5.7.0",
+    "supertest": "6.3.3",
     "tsup": "8.0.1",
     "tsx": "4.6.2",
-    "typescript": "5.3.3",
-    "vite-tsconfig-paths": "4.2.2",
-    "vitest": "1.0.2"
+    "typescript": "5.3.3"
   }
 }

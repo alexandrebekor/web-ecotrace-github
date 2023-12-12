@@ -4,7 +4,7 @@ import { FindUserService } from '@/services/find-user.service'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
-export const findUser = async (request: FastifyRequest, response: FastifyReply) => {
+export const getAccountByUsername = async (request: FastifyRequest, response: FastifyReply) => {
 	const schema = z.object({
 		username: z.string().min(1)
 	})

@@ -1,4 +1,4 @@
-import { Account, Repositories } from '@/types/accounts'
+import { Account, Repositories } from '@/@types/accounts'
 
 export type AccountsRepository = {
 	findByUsername(username: string): Promise<Account | null>

@@ -28,4 +28,14 @@ export class InMemorySearchesRepository implements SearchesRepository {
 
 		return searches
 	}
+
+	async deleteSearch(searchId: string) {
+		const searches = this.searches.filter(search => search.id !== searchId)
+
+		if(!searches) {
+			return null
+		}
+
+		return searches
+	}
 }

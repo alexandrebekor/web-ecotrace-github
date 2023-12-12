@@ -1,6 +1,8 @@
-import { PrismaUsersRepository } from '@/repositories/prisma/prisma-users.repository'
+// @vitest-environment prisma
+
 import { ResourceNotFound } from '@/services/errors/resource-not-found.error'
-import { GetUserProfileService } from '@/services/get-user-profile.service'
+import { makeGetUserProfile } from '@/services/factories/make-get-user-profile.factory'
+
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
@@ -12,8 +14,7 @@ export const getUserProfile = async (request: FastifyRequest, response: FastifyR
 	const { sub: userId } = schema.parse(request.user)
 
 	try {
-		const usersRepository = new PrismaUsersRepository()
-		const getUserProfileService = new GetUserProfileService(usersRepository)
+		const getUserProfileService = makeGetUserProfile()
     
 		const { user } = await getUserProfileService.execute({
 			userId
@@ -28,8 +29,8 @@ export const getUserProfile = async (request: FastifyRequest, response: FastifyR
 			return response.status(404).send({
 				message: error.message
 			})
-
-			throw error
 		}
+
+		throw error
 	}
 }

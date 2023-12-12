@@ -1,11 +1,9 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
-import { PrismaUsersRepository } from '@/repositories/prisma/prisma-users.repository'
 import { InvalidUsername } from '@/services/errors/invalid-username.error'
 import { UserAlreadyExists } from '@/services/errors/user-already-exists.error'
-import { SignUpService } from '@/services/sign-up.service'
-import { GithubPrivateAccountsRepository } from '@/repositories/github-private/github-private-accounts.repository'
+import { makeSignUpFactory } from '@/services/factories/make-sign-up.factory'
 
 export const signUp = async (request: FastifyRequest, response: FastifyReply) => {
 	const schema = z.object({
@@ -17,10 +15,7 @@ export const signUp = async (request: FastifyRequest, response: FastifyReply) =>
 	const { username, email, password } = schema.parse(request.body)
 
 	try {
-		const usersRepository = new PrismaUsersRepository()
-		const accountsRepository = new GithubPrivateAccountsRepository()
-		
-		const signUpService = new SignUpService(usersRepository, accountsRepository)
+		const signUpService = makeSignUpFactory()
 
 		const { user } = await signUpService.execute({
 			username,
@@ -34,7 +29,7 @@ export const signUp = async (request: FastifyRequest, response: FastifyReply) =>
 			}
 		})
 
-		return response.status(200).send({
+		return response.status(201).send({
 			token
 		})
 	} catch (error) {
