@@ -6,6 +6,10 @@ on:
   pull_request:
     types: [opened, synchronize]
 
+  env:
+    AUTH_TOKEN=authToken
+    
+
 jobs:
   build:
     name: Build and Test

@@ -12,6 +12,8 @@ jobs:
 
     env:
       TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
+      AUTH_TOKEN: authToken
+      BASE_API_URL: "http://localhost:3333"
 
     services:
       postgresql:
