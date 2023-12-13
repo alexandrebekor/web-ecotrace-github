@@ -1,6 +1,7 @@
 import { Prisma, User } from '@prisma/client'
 import { UsersRepository } from '../users.repository'
 import { randomUUID } from 'crypto'
+import { ResourceNotFound } from '@/services/errors/resource-not-found.error'
 
 export class InMemoryUsersRepository implements UsersRepository {
 	private users: User[] = []
@@ -31,7 +32,7 @@ export class InMemoryUsersRepository implements UsersRepository {
 		const currentUser = this.users.find(user => user.id === id)
 
 		if(!currentUser) {
-			return null
+			throw new ResourceNotFound()
 		}
 
 		const user = {

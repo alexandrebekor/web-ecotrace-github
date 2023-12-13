@@ -26,7 +26,8 @@ export const signIn = async (request: FastifyRequest, response: FastifyReply) =>
 		})
 
 		return response.status(200).send({
-			token
+			token,
+			username: user.username
 		})
 	} catch (error) {
 		if(error instanceof CredentialsInvalid) {

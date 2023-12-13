@@ -2,8 +2,6 @@ import server, { FastifyError, FastifyReply, FastifyRequest } from 'fastify'
 import { ZodError } from 'zod'
 import { env } from './lib/env'
 import { PrismaClientInitializationError } from '@prisma/client/runtime/library'
-import { NotAuthorized } from './services/errors/not-authorized.error'
-import { ApiNotResponding } from './services/errors/api-not-responding.error'
 import { userRoutes } from './http/controllers/users/routes'
 import fastifyJwt from '@fastify/jwt'
 import { accountsRoutes } from './http/controllers/accounts/routes'
@@ -38,18 +36,6 @@ app.setErrorHandler((error: FastifyError, _request: FastifyRequest, response: Fa
 	if(error instanceof PrismaClientInitializationError) {
 		return response.status(500).send({
 			message: 'Database is not running'
-		})
-	}
-
-	if(error instanceof NotAuthorized) {
-		return response.status(403).send({
-			message: error.message
-		})
-	}
-
-	if(error instanceof ApiNotResponding) {
-		return response.status(500).send({
-			message: error.message
 		})
 	}
 

@@ -12,5 +12,5 @@ export const userRoutes = async (app: FastifyInstance) => {
 
 	// Private
 	app.get('/me', { onRequest: [verifyJWT] }, getUserProfile)
-	app.post('/me', { onRequest: [verifyJWT] }, updateUser)
+	app.put('/me', { onRequest: [verifyJWT] }, updateUser)
 }

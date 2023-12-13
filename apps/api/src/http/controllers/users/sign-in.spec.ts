@@ -31,7 +31,8 @@ describe('E2E: Sign in', () => {
 
 		expect(response.statusCode).toEqual(200)
 		expect(response.body).toEqual({
-			token: expect.any(String)
+			token: expect.any(String),
+			username
 		})
 	})
 })

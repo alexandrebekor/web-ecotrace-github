@@ -12,6 +12,10 @@ jobs:
     timeout-minutes: 15
     runs-on: ubuntu-latest
 
+    env:
+      AUTH_TOKEN: authToken
+      BASE_API_URL: "http://localhost:3333"
+
     steps:
       - name: Check out code
         uses: actions/checkout@v3
