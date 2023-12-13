@@ -30,7 +30,7 @@ describe('Update current user', () => {
 		})
 
 		const response = await request(app.server)
-			.post('/api/me')
+			.put('/api/me')
 			.set('Authorization', `Bearer ${token}`)
 			.send({
 				email: newEmail,

@@ -15,6 +15,9 @@ export class PrismaSearchesRepository implements SearchesRepository {
 		const search = await prisma.search.findMany({
 			where: {
 				userId
+			},
+			orderBy: {
+				created_at: 'desc'
 			}
 		})
 
