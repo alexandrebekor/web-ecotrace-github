@@ -2,7 +2,7 @@
 
 [![Run Tests](https://github.com/alexandrebekor/web-ecotrace-github/actions/workflows/run-tests.yml/badge.svg)](https://github.com/alexandrebekor/web-ecotrace-github/actions/workflows/run-tests.yml)
 
-Desafio: Projeto de listagem de repositórios do Github, com suporte a cadastro/edição do usuário de acesso, visualização de repositórios de terceiros com persistencia de histórico de consulta.
+::description: Desafio: Projeto de listagem de repositórios do Github, com suporte a cadastro/edição do usuário de acesso, visualização de repositórios de terceiros com persistencia de histórico de consulta.
 
 > Esse projeto é público e você pode acompanhar o progresso dele pelo painel: (Github Projects)[https://github.com/users/alexandrebekor/projects/77]
 
